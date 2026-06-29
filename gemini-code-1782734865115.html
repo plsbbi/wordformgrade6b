@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuyên Đề Cấu Trúc Từ Loại Word Form (Học Phần 3) - Ms Lê Hằng English</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #8854C0;
+            --accent-color: #FDCB6E;
+            --teal-color: #00C9A7;
+            --correct-color: #00D26A;
+            --wrong-color: #FF4757;
+            --text-color: #2D3436;
+            --card-bg: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+            margin: 0; padding: 0;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #8854C0, #FDCB6E, #00C9A7, #FF7675);
+            background-size: 400% 400%;
+            animation: gradientAnim 12s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; opacity: 0.12; pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M20 20 L30 20 L30 30 L20 30 Z M70 20 A 8 8 0 1 1 70 36 A 8 8 0 1 1 70 20 M50 70 L55 80 L65 80 L57 86 L60 96 L50 90 L40 96 L43 86 L35 80 L45 80 Z' /%3E%3C/g%3E%3C/svg%3E");
+            animation: patternFloat 25s linear infinite;
+        }
+
+        @keyframes gradientAnim {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes patternFloat {
+            0% { background-position: 0 0; }
+            100% { background-position: 500px 1000px; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 780px;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        header h5 {
+            font-size: 1.05rem;
+            color: #FFFFFF;
+            background: rgba(0, 0, 0, 0.15);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            font-weight: 700;
+        }
+
+        .warning-box {
+            background: #FFEAA7;
+            border: 4px solid #FDCB6E;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 0 #E17055;
+            color: #2D3436;
+            text-align: center;
+        }
+
+        .warning-box h4 {
+            font-size: 1.25rem;
+            color: #D63031;
+            margin-bottom: 8px;
+            font-weight: 900;
+        }
+
+        .warning-box p {
+            font-size: 0.98rem;
+            line-height: 1.5;
+            font-weight: 700;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 22px;
+            padding: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 0 rgba(0,0,0,0.1);
+            border: 3px solid #E0E0E0;
+        }
+
+        .card-meta-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #A0A0A0;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 18px;
+            background: #F8F9FA;
+            padding: 14px;
+            border-radius: 12px;
+            border-left: 5px solid #6C5CE7;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: #FFFFFF;
+            border: 3px solid #E0E0E0;
+            border-radius: 18px;
+            padding: 14px 20px;
+            font-size: 1.02rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-align: left;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #E0E0E0;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            width: 100%;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            transform: scale(1.01) translateY(-2px);
+            box-shadow: 0 8px 0 #D0D0D0;
+            background: #FAEDFF;
+        }
+
+        .option-btn.correct {
+            background: var(--correct-color) !important;
+            border-color: #00B359 !important;
+            color: white !important;
+            box-shadow: 0 6px 0 #008040 !important;
+        }
+
+        .option-btn.wrong {
+            background: var(--wrong-color) !important;
+            border-color: #E03847 !important;
+            color: white !important;
+            box-shadow: 0 6px 0 #B32431 !important;
+        }
+
+        .option-btn.disabled {
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        @keyframes shakeAction {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        .shake-animation { animation: shakeAction 0.4s ease-in-out; }
+
+        .explanation-box {
+            margin-top: 20px;
+            background: #F3EAFE;
+            border-left: 6px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 15px 18px;
+            display: none;
+            animation: slideDown 0.4s ease forwards;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .explanation-title {
+            color: var(--primary-color);
+            font-weight: 900;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+
+        .explanation-content {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .submit-all-btn {
+            background: #6C5CE7; color: white; border: none;
+            padding: 16px 45px; font-size: 1.3rem; font-weight: 900;
+            border-radius: 22px; cursor: pointer; box-shadow: 0 6px 0 #4834D4;
+        }
+
+        #confetti-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 999;
+        }
+
+        .modal-mask {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); display: flex;
+            justify-content: center; align-items: center; z-index: 1000;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .modal-mask.active { opacity: 1; pointer-events: auto; }
+        .modal-container {
+            background: white; border-radius: 25px; padding: 35px;
+            max-width: 520px; width: 90%; text-align: center;
+            border: 4px solid var(--accent-color);
+        }
+        .modal-score { font-size: 3rem; font-weight: 900; color: var(--primary-color); margin: 15px 0; }
+        .modal-feedback { font-size: 1.05rem; color: var(--text-color); font-weight: 700; line-height: 1.6; margin-bottom: 25px; }
+        .modal-btn {
+            background: var(--teal-color); color: white; border: none; padding: 12px 30px;
+            font-size: 1.05rem; font-weight: 700; border-radius: 14px; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="container">
+        <header>
+            <h5>Giáo viên tạo: Ms Lê Hằng English</h5>
+        </header>
+
+        <div class="warning-box">
+            <h4>⚠️ HỌC PHẦN ĐẶC BIỆT: CÂU 51 ĐẾN 100 (BỘ ĐỀ CHUYÊN) ⚠️</h4>
+            <p>Thử thách nhận diện từ phái sinh, tính từ ghép và các cụm từ vựng cố định nâng cao. Hãy nghiền ngẫm thật kỹ bảng phân tích Word Family sau mỗi lượt chọn nhé con!</p>
+        </div>
+
+        <div id="quiz-injector-node"></div>
+
+        <div class="submit-section">
+            <button class="submit-all-btn" onclick="processQuizEvaluation()">NỘP BÀI CHẤM ĐIỂM 🎉</button>
+        </div>
+    </div>
+
+    <div class="modal-mask" id="score-modal">
+        <div class="modal-container">
+            <h2>🏆 KẾT QUẢ BÀI KIỂ TRA 🏆</h2>
+            <div class="modal-score" id="score-text">0 / 50</div>
+            <div class="modal-feedback" id="feedback-text">Lời khuyên tuyển sinh từ cô giáo...</div>
+            <button class="modal-btn" onclick="reloadQuizLayout()">Làm Lại Từ Đầu 🔄</button>
+        </div>
+    </div>
+
+    <script>
+        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+        let audioContextInstance = null;
+
+        function triggerSoundFeedback(status) {
+            try {
+                if (!audioContextInstance) audioContextInstance = new AudioCtxClass();
+                const osc = audioContextInstance.createOscillator();
+                const gain = audioContextInstance.createGain();
+                osc.connect(gain); gain.connect(audioContextInstance.destination);
+
+                if (status === 'correct') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, audioContextInstance.currentTime);
+                    osc.frequency.setValueAtTime(783.99, audioContextInstance.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.15, audioContextInstance.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioContextInstance.currentTime + 0.3);
+                    osc.start(); osc.stop(audioContextInstance.currentTime + 0.3);
+                } else {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(196, audioContextInstance.currentTime);
+                    osc.frequency.setValueAtTime(130, audioContextInstance.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.2, audioContextInstance.currentTime);
+                    osc.start(); osc.stop(audioContextInstance.currentTime + 0.35);
+                }
+            } catch (e) {}
+        }
+
+        // KHO DỮ LIỆU ĐẦY ĐỦ VÀ CHÍNH XÁC 50 CÂU THEO THIẾT LẬP MỚI NHẤT
+        const dataset = [
+            { id: 51, text: "51. My mother goes (SHOP) twice a week.", options: ["shopping", "shoppers", "shop", "shopped"], correct: "shopping", exp: "<strong>Giải thích:</strong> Cấu trúc chỉ hoạt động giải trí: go + V-ing. Go shopping: đi mua sắm.<br><br><strong>💎 Word Family:</strong><br>• Động từ/Danh từ: shop<br>• Danh từ hành động: shopping<br>• Danh từ chỉ người: shopper" },
+            { id: 52, text: "52. They are learning (GERMANY) because they will go to Berlin next year.", options: ["German", "Germanic", "Germans", "Germany"], correct: "German", exp: "<strong>Giải thích:</strong> Berlin là thủ đô nước Đức, môn học ngôn ngữ tương ứng là tiếng Đức (German).<br><br><strong>💎 Word Family:</strong><br>• Danh từ quốc gia: Germany<br>• Danh từ ngôn ngữ/Tính từ: German" },
+            { id: 53, text: "53. In math I am (BAD) than you.", options: ["worse", "worst", "badly", "worsen"], correct: "worse", exp: "<strong>Giải thích:</strong> Có trạng từ so sánh 'than' đứng sau. Bad là tính từ bất quy tắc, dạng so sánh hơn đổi thành worse.<br><br><strong>💎 Word Family:</strong><br>• Tính từ: bad -> worse -> worst<br>• Động từ: worsen<br>• Trạng từ: badly" },
+            { id: 54, text: "54. His brother is strong and (GOOD-LOOK) .", options: ["good-looking", "good-look", "good-looked", "good-looks"], correct: "good-looking", exp: "<strong>Giải thích:</strong> Cần một tính từ ghép đứng sau tobe 'is' để mô tả ngoại hình ưa nhìn. Good-looking (adj).<br><br><strong>💎 Word Family:</strong><br>• Động từ/Danh từ: look<br>• Tính từ ghép: good-looking" },
+            { id: 55, text: "55. In the library we read about (WONDER) things.", options: ["wonderful", "wonder", "wonderfully", "wondering"], correct: "wonderful", exp: "<strong>Giải thích:</strong> Cần tính từ đứng trước bổ nghĩa đặc tính cho danh từ 'things'. Wonderful (adj): tuyệt vời.<br><br><strong>💎 Word Family:</strong><br>• Động từ/Danh từ: wonder<br>• Tính từ: wonderful<br>• Trạng từ: wonderfully" },
+            { id: 56, text: "56. There are nineteen (CLASS) in Thu’s school.", options: ["classes", "class", "classing", "classic"], correct: "classes", exp: "<strong>Giải thích:</strong> Sau số đếm lớn 19 cần danh từ số nhiều. Kết thúc bằng '-ss' ta thêm '-es' thành classes.<br><br><strong>💎 Word Family:</strong><br>• Danh từ: class -> classes<br>• Động từ: classify -> danh từ: classification" },
+            { id: 57, text: "57. Mr. Tan is a truck (DRIVE) .", options: ["driver", "driving", "drive", "driven"], correct: "driver", exp: "<strong>Giải thích:</strong> Cấu tạo danh từ ghép chỉ ngành nghề: truck driver (tài xế xe tải).<br><br><strong>💎 Word Family:</strong><br>• Động từ/Danh từ: drive<br>• Danh từ người: driver<br>• Danh từ hành động: driving" },
+            { id: 58, text: "58. I like the city life because it is (ENTERTAIN) .", options: ["entertaining", "entertainment", "entertained", "entertain"], correct: "entertaining", exp: "<strong>Giải thích:</strong> Đứng sau tobe miêu tả đặc trưng tự thân của sự vật chỉ vật ('city life') cần tính từ đuôi -ing. Entertaining (adj): thú vị.<br><br><strong>💎 Word Family:</strong><br>• Động từ: entertain<br>• Danh từ: entertainment<br>• Tính từ: entertaining" },
+            { id: 59, text: "59. My mother and my sister are (TEACH) . My mother (TEACH) English at a primary school near my house.", options: ["teachers / teaches", "teacher / teach", "teachers / teach", "teacher / teaches"], correct: "teachers / teaches", exp: "<strong>Giải thích:</strong> Vế 1: Cần danh từ số nhiều chỉ người (2 người). Vế 2: Động từ chia theo chủ ngữ số ít ngôi thứ ba thêm đuôi -es (teaches).<br><br><strong>💎 Word Family:</strong><br>• Động từ: teach<br>• Danh từ chỉ người: teacher<br>• Danh từ hành động: teaching" },
+            { id: 60, text: "60. Children look very (EXCITE) while playing games during break time.", options: ["excited", "exciting", "excitement", "excite"], correct: "excited", exp: "<strong>Giải thích:</strong> Đứng sau cụm 'look very' chỉ xúc cảm của người ('Children') $\rightarrow$ dùng tính từ đuôi -ed: excited (adj).<br><br><strong>💎 Word Family:</strong><br>• Động từ: excite<br>• Danh từ: excitement<br>• Tính từ: excited / exciting" },
+            { id: 61, text: "61. The (LONG) of the experiment is 20 minutes.", options: ["length", "long", "lengthen", "lengthy"], correct: "length", exp: "<strong>Giải thích:</strong> Kẹp giữa cấu trúc 'The... of' đóng vai trò chủ ngữ cần một danh từ kích thước/thời gian. Length (n): độ dài, thời lượng.<br><br><strong>💎 Word Family:</strong><br>• Tính từ: long<br>• Danh từ: length<br>• Động từ: lengthen<br>• Tính từ: lengthy" },
+            { id: 62, text: "62. Sometimes we are bored and (SLEEP) with his long lectures.", options: ["sleepy", "sleep", "sleepless", "sleepily"], correct: "sleepy", exp: "<strong>Giải thích:</strong> Tính từ chỉ trạng thái cơ thể nối chữ 'and' sau tobe đồng bộ với tính từ bored. Sleepy (adj): buồn ngủ.<br><br><strong>💎 Word Family:</strong><br>• Danh từ/Động từ: sleep<br>• Tính từ: sleepy / sleepless<br>• Trạng từ: sleepily" },
+            { id: 63, text: "63. I like the fried chicken in our school canteen: It’s really (TASTE) .", options: ["tasty", "taste", "tasteless", "tasteful"], correct: "tasty", exp: "<strong>Giải thích:</strong> Tính từ khen ngợi món ăn ngon miệng đứng sau trạng từ mức độ 'really'. Tasty (adj): ngon.<br><br><strong>💎 Word Family:</strong><br>• Động từ/Danh từ: taste<br>• Tính từ: tasty $\leftrightarrow$ tasteless" },
+            { id: 64, text: "64. My aunt works as a (CHEMISTRY) at a university.", options: ["chemist", "chemistry", "chemical", "chemicals"], correct: "chemist", exp: "<strong>Giải thích:</strong> Sau cụm chức danh 'works as a' cần danh từ chỉ người làm chuyên môn. Chemist (n): nhà hóa học.<br><br><strong>💎 Word Family:</strong><br>• Danh từ ngành học: chemistry<br>• Danh từ chỉ người: chemist<br>• Tính từ/Danh từ: chemical" },
+            { id: 65, text: "65. He’s not very (TALK) , is he?", options: ["talkative", "talk", "talking", "talkatively"], correct: "talkative", exp: "<strong>Giải thích:</strong> Tính từ đứng sau trạng từ 'very' miêu tả tính cách con người. Talkative (adj): nói nhiều, hay nói.<br><br><strong>💎 Word Family:</strong><br>• Động từ/Danh từ: talk<br>• Tính từ: talkative" },
+            { id: 66, text: "66. Statham was standing at the door, (LOOK) at the crowd.", options: ["looking", "looked", "look", "looks"], correct: "looking", exp: "<strong>Giải thích:</strong> Sử dụng phân từ hiện tại V-ing tạo mệnh đề rút gọn diễn tả hai hành động diễn ra cùng lúc của cùng một chủ ngữ." },
+            { id: 67, text: "67. I have run out of (PATIENT) with her.", options: ["patience", "patient", "impatient", "patiently"], correct: "patience", exp: "<strong>Giải thích:</strong> Đứng sau cụm phrasal verb 'run out of' (hết sạch cái gì) cần một danh từ trừu tượng. Patience (n): sự kiên nhẫn.<br><br><strong>💎 Word Family:</strong><br>• Danh từ: patience<br>• Tính từ: patient $\leftrightarrow$ impatient" },
+            { id: 68, text: "68. These river banks have inspired (POEM) for many centuries.", options: ["poems", "poetry", "poet", "poetic"], correct: "poems", exp: "<strong>Giải thích:</strong> Làm tân ngữ cho động từ inspired, có thể điền danh từ số nhiều chỉ tác phẩm văn học: poems (những bài thơ).<br><br><strong>💎 Word Family:</strong><br>• Danh từ: poem / poetry / poet<br>• Tính từ: poetic" },
+            { id: 69, text: "69. Young children will usually (COMPETITION) for their mother’s attention.", options: ["compete", "competition", "competitor", "competitive"], correct: "compete", exp: "<strong>Giải thích:</strong> Đứng sau động từ khuyết thiếu 'will' cần một động từ nguyên mẫu. Compete (v): cạnh tranh, tranh giành.<br><br><strong>💎 Word Family:</strong><br>• Động từ: compete<br>• Danh từ: competition / competitor<br>• Tính từ: competitive" },
+            { id: 70, text: "70. She’s a (SOCIETY) child who’ll talk to anyone.", options: ["sociable", "social", "society", "socialize"], correct: "sociable", exp: "<strong>Giải thích:</strong> Đứng trước danh từ bổ nghĩa nét tính cách cởi mở, hòa đồng giao tiếp. Sociable (adj): hòa đồng.<br><br><strong>💎 Word Family:</strong><br>• Danh từ: society<br>• Tính từ: social / sociable<br>• Động từ: socialize" },
+            { id: 71, text: "71. This program is for children (AGE) between 10-25.", options: ["aged", "age", "ages", "ageless"], correct: "aged", exp: "<strong>Giải thích:</strong> Phân từ quá khứ mang nghĩa bị động rút gọn mệnh đề quan hệ: 'ở độ tuổi là'. Children aged...<br><br><strong>💎 Word Family:</strong><br>• Danh từ/Động từ: age<br>• Tính từ phân từ: aged" },
+            { id: 72, text: "72. There are nineteen (CLASS) in Thu’s school.", options: ["classes", "class", "classing", "classic"], correct: "classes", exp: "<strong>Giải thích:</strong> Danh từ số nhiều classes đứng sau số đếm 19 (tương tự câu 56)." },
+            { id: 73, text: "73. Let him do it (HE) .", options: ["himself", "his", "him", "he"], correct: "himself", exp: "<strong>Giải thích:</strong> Đại từ phản thân đứng cuối câu nhấn mạnh chủ thể tự thực hiện hành động một mình. Himself (reflexive pronoun)." },
+            { id: 74, text: "74. Long goes (SAIL) at the weekend.", options: ["sailing", "sail", "sailor", "sailed"], correct: "sailing", exp: "<strong>Giải thích:</strong> Cấu trúc go + V-ing chỉ môn thể thao ngoài trời. Go sailing: đi chèo thuyền buồm.<br><br><strong>💎 Word Family:</strong><br>• Động từ/Danh từ: sail<br>• Danh từ hành động: sailing<br>• Danh từ người: sailor" },
+            { id: 75, text: "75. Has your sister got a (HEAD) ? She looks tired", options: ["headache", "head", "heading", "headaches"], correct: "headache", exp: "<strong>Giải thích:</strong> Cấu trúc chỉ bệnh lý lâm sàng: have/has got a + danh từ tên bệnh. Đau đầu: headache (n).<br><br><strong>💎 Word Family:</strong><br>• Danh từ bộ phận: head -> danh từ bệnh: headache" },
+            { id: 76, text: "76. This is my favorite chair. It’s so (COMFORT) .", options: ["comfortable", "uncomfortable", "comfort", "comfortably"], correct: "comfortable", exp: "<strong>Giải thích:</strong> Tính từ miêu tả tính chất tiện nghi êm ái đứng sau cấu trúc 'It's so'. Comfortable (adj): thoải mái.<br><br><strong>💎 Word Family:</strong><br>• Danh từ/Động từ: comfort<br>• Tính từ: comfortable $\leftrightarrow$ uncomfortable" },
+            { id: 77, text: "77. His ambition is to be a (MILLION) one day.", options: ["millionaire", "million", "millions", "millionth"], correct: "millionaire", exp: "<strong>Giải thích:</strong> Sau mạo từ 'a' cần danh từ số ít chỉ danh xưng con người đạt tài sản lớn. Millionaire (n): triệu phú.<br><br><strong>💎 Word Family:</strong><br>• Danh từ số đếm: million -> danh từ người: millionaire" },
+            { id: 78, text: "78. Her (TOOTH) are small and white.", options: ["teeth", "tooth", "tooths", "toothing"], correct: "teeth", exp: "<strong>Giải thích:</strong> Làm chủ ngữ đứng trước tobe số nhiều 'are' bắt buộc đổi danh từ sang dạng số nhiều bất quy tắc: teeth (hàm răng).<br><br><strong>💎 Word Family:</strong><br>• Danh từ số ít: tooth -> danh từ số nhiều: teeth" },
+            { id: 79, text: "79. The thing I hate most about him is his (SELFISH) .", options: ["selfishness", "selfish", "unselfish", "self"], correct: "selfishness", exp: "<strong>Giải thích:</strong> Đứng sau tính từ sở hữu 'his' cần một danh từ trừu tượng chỉ phẩm chất thói xấu. Selfishness (n): sự ích kỷ.<br><br><strong>💎 Word Family:</strong><br>• Danh từ gốc: self<br>• Tính từ: selfish<br>• Danh từ trừu tượng: selfishness" },
+            { id: 80, text: "80. It was (KIND) of you to make fun of him like that.", options: ["unkind", "kind", "kindness", "unkindness"], correct: "unkind", exp: "<strong>Giải thích:</strong> Hành vi trêu chọc chế giễu bạn (make fun of him) là ác ý, cần tính từ mang nghĩa tiêu cực: unkind (không tử tế).<br><br><strong>💎 Word Family:</strong><br>• Tính từ: kind $\leftrightarrow$ unkind<br>• Danh từ trừu tượng: kindness" },
+            { id: 81, text: "81. I'll never forget the (KIND) you have shown me.", options: ["kindness", "kind", "unkind", "kindly"], correct: "kindness", exp: "<strong>Giải thích:</strong> Sau mạo từ 'the' làm tân ngữ chỉ khái niệm tốt đẹp nhận được $\rightarrow$ danh từ trừu tượng: kindness (lòng tốt)." },
+            { id: 82, text: "82. That film is very (ROMANCE) .", options: ["romantic", "romance", "romancing", "romantically"], correct: "romantic", exp: "<strong>Giải thích:</strong> Tính từ miêu tả tính chất thể loại của bộ phim đứng sau cấu trúc 'is very'. Romantic (adj): lãng mạn.<br><br><strong>💎 Word Family:</strong><br>• Danh từ/Động từ: romance<br>• Tính từ: romantic<br>• Trạng từ: romantically" },
+            { id: 83, text: "83. There's too much (GREEDY) in this world.", options: ["greed", "greedy", "greediness", "greedily"], correct: "greed", exp: "<strong>Giải thích:</strong> Sau lượng từ không đếm được 'too much' cần danh từ gốc trừu tượng chỉ khái niệm thói hư. Greed (n): lòng tham.<br><br><strong>💎 Word Family:</strong><br>• Danh từ trừu tượng: greed<br>• Tính từ: greedy<br>• Trạng từ: greedily" },
+            { id: 84, text: "84. I didn't like the local people. They're very (FRIEND) .", options: ["unfriendly", "friendly", "friend", "friendship"], correct: "unfriendly", exp: "<strong>Giải thích:</strong> Ngữ cảnh ghét bỏ 'didn't like' đòi hỏi điền một tính từ mang sắc thái phủ định: unfriendly (khó gần, không thân thiện).<br><br><strong>💎 Word Family:</strong><br>• Danh từ: friend / friendship<br>• Tính từ: friendly $\leftrightarrow$ unfriendly" },
+            { id: 85, text: "85. What I don’t like about him is his (LAZY) .", options: ["laziness", "lazy", "lazily", "lazinesses"], correct: "laziness", exp: "<strong>Giải thích:</strong> Đứng sau tính từ sở hữu 'his' ở cuối câu cần danh từ trừu tượng chỉ thói quen xấu. Laziness (n): sự lười biếng.<br><br><strong>💎 Word Family:</strong><br>• Tính từ: lazy<br>• Trạng từ: lazily<br>• Danh từ trừu tượng: laziness" },
+            { id: 86, text: "86. They don’t like his (SELFISH) .", options: ["selfishness", "selfish", "unselfish", "self"], correct: "selfishness", exp: "<strong>Giải thích:</strong> Danh từ trừu tượng sự ích kỷ đứng sau từ hạn định sở hữu 'his' (tương tự câu 79)." },
+            { id: 87, text: "87. The (THICK) of the book is 30 pages", options: ["thickness", "thick", "thicken", "thickly"], correct: "thickness", exp: "<strong>Giải thích:</strong> Cấu trúc đo lường vật lý kẹp giữa 'The... of' đòi hỏi danh từ thông số bề dày. Thickness (n): độ dày.<br><br><strong>💎 Word Family:</strong><br>• Tính từ: thick<br>• Danh từ: thickness<br>• Động từ: thicken" },
+            { id: 88, text: "88. These countries are (PREFER) in imports of raw cotton.", options: ["preferred", "preferential", "preference", "prefer"], correct: "preferred", exp: "<strong>Giải thích:</strong> Cấu trúc thể bị động sau hệ từ tobe: be + V3/V-ed diễn tả việc được ưu tiên chuộng hơn. Preferred (adj/v_ed).<br><br><strong>💎 Word Family:</strong><br>• Động từ: prefer<br>• Danh từ: preference<br>• Tính từ: preferable / preferential" },
+            { id: 89, text: "89. Japan is an (INDUSTRY) country.", options: ["industrial", "industrious", "industry", "industrialize"], correct: "industrial", exp: "<strong>Giải thích:</strong> Tính từ phân loại đứng trước bổ nghĩa danh từ country. Industrial country (n): nước công nghiệp. (Tránh nhầm với industrious là chăm chỉ).<br><br><strong>💎 Word Family:</strong><br>• Danh từ: industry<br>• Tính từ: industrial (thuộc công nghiệp) / industrious (chăm chỉ)" },
+            { id: 90, text: "90. The room was decorated, and was (ATTRACT) admired by everybody.", options: ["attractively", "attractive", "attraction", "attract"], correct: "attractively", exp: "<strong>Giải thích:</strong> Trạng từ cách thức đứng trước bổ nghĩa phương thức cho động từ thể bị động 'admired'. Attractively (adv): một cách bắt mắt, đẹp đẽ.<br><br><strong>💎 Word Family:</strong><br>• Động từ: attract -> danh từ: attraction<br>• Tính từ: attractive -> trạng từ: attractively" },
+            { id: 91, text: "91. They're both good (TYPE) because they type carefully.", options: ["typists", "typist", "type", "typewriter"], correct: "typists", exp: "<strong>Giải thích:</strong> Đứng sau tính từ và tương thích chủ ngữ số nhiều hai người ('They're both') cần danh từ số nhiều chỉ người. Typists (n): thợ đánh máy.<br><br><strong>💎 Word Family:</strong><br>• Động từ: type<br>• Danh từ chỉ người: typist -> số nhiều: typists" },
+            { id: 92, text: "92. (CULTURE) activities should be promoted.", options: ["Cultural", "Culture", "Culturally", "Cultures"], correct: "Cultural", exp: "<strong>Giải thích:</strong> Tính từ đứng đầu câu bổ nghĩa tính chất cho danh từ chủ ngữ số nhiều 'activities'. Cultural (adj): thuộc về văn hóa.<br><br><strong>💎 Word Family:</strong><br>• Danh từ vĩ mô: culture<br>• Tính từ đặc tính: cultural -> trạng từ: culturally" },
+            { id: 93, text: "93. I love (ACT) film", options: ["action", "actor", "active", "activity"], correct: "action", exp: "<strong>Giải thích:</strong> Danh từ phụ trợ ghép danh từ đứng sau tạo lập danh từ ghép chỉ thể loại phim: action film (phim hành động).<br><br><strong>💎 Word Family:</strong><br>• Danh từ: action / activity<br>• Động từ: act" },
+            { id: 94, text: "94. He is unhappy because of his son's (LAZY) .", options: ["laziness", "lazy", "lazily", "lazinesses"], correct: "laziness", exp: "<strong>Giải thích:</strong> Danh từ trừu tượng sự lười biếng đứng sau sở hữu cách 'his son's' (tương tự câu 85)." },
+            { id: 95, text: "95. The surgeons tried their best to save his life, but unfortunately the operation was (SUCCEED) .", options: ["unsuccessful", "successful", "success", "succeeded"], correct: "unsuccessful", exp: "<strong>Giải thích:</strong> Trạng từ 'unfortunately' (thật không may) báo hiệu ca mổ thất bại, cần tính từ phủ định sau tobe: unsuccessful (adj): thất bại.<br><br><strong>💎 Word Family:</strong><br>• Động từ: succeed -> danh từ: success<br>• Tính từ: successful $\leftrightarrow$ unsuccessful" },
+            { id: 96, text: "96. The (PRODUCE) of this factory are widely consumed in the country.", options: ["products", "produce", "production", "productive"], correct: "products", exp: "<strong>Giải thích:</strong> Làm chủ ngữ kết hợp động từ số nhiều 'are consumed' chỉ vật phẩm sản xuất ra của nhà máy. Products (n_pl): các sản phẩm.<br><br><strong>💎 Word Family:</strong><br>• Động từ: produce -> danh từ vật phẩm: product" },
+            { id: 97, text: "97. Sword Lake is a (HISTORY) place in Vietnam.", options: ["historic", "historical", "history", "historically"], correct: "historic", exp: "<strong>Giải thích:</strong> Tính từ bổ nghĩa danh thắng đóng vai trò chứng nhân trọng đại trong dòng tiến trình lịch sử: historic (adj). (Historical chỉ mang nghĩa thuộc về lịch sử sách vở chung chung).<br><br><strong>💎 Word Family:</strong><br>• Danh từ: history<br>• Tính từ: historic (trọng đại lịch sử) / historical (thuộc sử liệu)" },
+            { id: 98, text: "98. It is said that traveling a lot will (BROAD) our minds.", options: ["broaden", "broad", "breadth", "broadly"], correct: "broaden", exp: "<strong>Giải thích:</strong> Sau động từ khuyết thiếu 'will' cần động từ nguyên mẫu tạo cụm cố định: broaden our minds (mở mang đầu óc).<br><br><strong>💎 Word Family:</strong><br>• Tính từ: broad<br>• Động từ: broaden<br>• Danh từ kích thước: breadth" },
+            { id: 99, text: "99. There have been many (CULTURE) activities on these days.", options: ["cultural", "culture", "culturally", "cultures"], correct: "cultural", exp: "<strong>Giải thích:</strong> Tính từ thuộc về văn hóa bổ nghĩa danh từ activities (tương tự câu 92)." },
+            { id: 100, text: "100. I go swimming (THREE) times a week. The swimming pool is on the (THREE) floor", options: ["three / third", "third / three", "three / three", "third / third"], correct: "three / third", exp: "<strong>Giải thích:</strong> Vị trí 1: Bổ nghĩa số chu kỳ chuỗi cần Số đếm (three). Vị trí 2: Chỉ thứ tự vị trí phân tầng tòa nhà cần Số thứ tự (third).<br><br>• Hệ số: three (số đếm) -> third (số thứ tự)" }
+        ];
+
+        let studentAnswersTrack = {};
+
+        function mixOptionsRandomly(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function buildQuizLayout() {
+            const rootNode = document.getElementById('quiz-injector-node');
+            rootNode.innerHTML = "";
+
+            // Lọc loại bỏ trùng lặp id câu hỏi để hiển thị danh sách sạch sẽ tuần tự
+            let uniqueItems = [];
+            let checkMap = new Set();
+            dataset.forEach(item => {
+                if(!checkMap.has(item.id)){
+                    checkMap.add(item.id);
+                    uniqueItems.push(item);
+                }
+            });
+
+            uniqueItems.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `q-card-block-${item.id}`;
+
+                let randomizedOptions = [...item.options];
+                mixOptionsRandomly(randomizedOptions);
+
+                let buttonsListMarkup = `<div class="options-list">`;
+                randomizedOptions.forEach((textOption, optIdx) => {
+                    const alphabetPrefix = ["A", "B", "C", "D"];
+                    const statusCheck = (textOption === item.correct);
+                    buttonsListMarkup += `
+                        <button class="option-btn" data-correct="${statusCheck}" onclick="validateUserClick(this, ${item.id})">
+                            <strong>${alphabetPrefix[optIdx]}.</strong> ${textOption}
+                        </button>
+                    `;
+                });
+                buttonsListMarkup += `</div>`;
+
+                card.innerHTML = `
+                    <div class="card-meta-title">Câu kiểm tra Word Form số ${index + 51} / 100</div>
+                    <div class="question-text">${item.text}</div>
+                    ${buttonsListMarkup}
+                    <div class="explanation-box" id="explain-box-id-${item.id}">
+                        <div class="explanation-title">📌 BẢNG PHÂN TÍCH CHUYÊN SÂU:</div>
+                        <div class="explanation-content">${item.exp}</div>
+                    </div>
+                `;
+                rootNode.appendChild(card);
+            });
+        }
+
+        function validateUserClick(buttonElement, questionId) {
+            if (studentAnswersTrack[questionId] !== undefined) return;
+
+            const isCorrect = buttonElement.getAttribute('data-correct') === 'true';
+            studentAnswersTrack[questionId] = isCorrect;
+
+            const currentCardNode = document.getElementById(`q-card-block-${questionId}`);
+            const siblingButtons = currentCardNode.querySelectorAll('.option-btn');
+
+            if (isCorrect) {
+                buttonElement.classList.add('correct');
+                triggerSoundFeedback('correct');
+                launchConfettiEffect();
+            } else {
+                buttonElement.classList.add('wrong');
+                currentCardNode.classList.add('shake-animation');
+                triggerSoundFeedback('wrong');
+
+                siblingButtons.forEach(btn => {
+                    if (btn.getAttribute('data-correct') === 'true') {
+                        btn.classList.add('correct');
+                    }
+                });
+
+                setTimeout(() => {
+                    currentCardNode.classList.remove('shake-animation');
+                }, 450);
+            }
+
+            siblingButtons.forEach(btn => btn.classList.add('disabled'));
+            document.getElementById(`explain-box-id-${questionId}`).style.display = "block";
+        }
+
+        const canvasElement = document.getElementById('confetti-canvas');
+        const ctxNode = canvasElement.getContext('2d');
+        let confettiCollection = [];
+
+        function dynamicCanvasResize() {
+            canvasElement.width = window.innerWidth;
+            canvasElement.height = window.innerHeight;
+        }
+        window.addEventListener('resize', dynamicCanvasResize);
+        dynamicCanvasResize();
+
+        function launchConfettiEffect() {
+            const colors = ['#FF4757', '#00D26A', '#8854C0', '#FDCB6E', '#00C9A7', '#FFFFFF'];
+            for (let i = 0; i < 35; i++) {
+                confettiCollection.push({
+                    x: Math.random() * canvasElement.width,
+                    y: Math.random() * canvasElement.height - canvasElement.height,
+                    size: Math.random() * 6 + 6,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speedX: Math.random() * 4 - 2,
+                    speedY: Math.random() * 4 + 4,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: Math.random() * 4 - 2
+                });
+            }
+        }
+
+        function animationLoop() {
+            ctxNode.clearRect(0, 0, canvasElement.width, canvasElement.height);
+            confettiCollection.forEach((p, index) => {
+                p.x += p.speedX; p.y += p.speedY; p.rotation += p.rotationSpeed;
+                ctxNode.save();
+                ctxNode.translate(p.x, p.y);
+                ctxNode.rotate((p.rotation * Math.PI) / 180);
+                ctxNode.fillStyle = p.color;
+                ctxNode.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                ctxNode.restore();
+                if (p.y > canvasElement.height) {
+                    confettiCollection.splice(index, 1);
+                }
+            });
+            requestAnimationFrame(animationLoop);
+        }
+        requestAnimationFrame(animationLoop);
+
+        function processQuizEvaluation() {
+            let uniqueCount = document.querySelectorAll('.question-card').length;
+            let correctCount = 0;
+
+            dataset.forEach(q => {
+                if (studentAnswersTrack[q.id] === true) {
+                    correctCount++;
+                }
+            });
+
+            let percentageResult = (correctCount / uniqueCount) * 100;
+            let finalTeacherComment = "";
+
+            if (percentageResult < 50) {
+                finalTeacherComment = "Học phần này có nhiều từ phái sinh biến đổi bất quy tắc khó. Con cần xem lại kỹ bảng Word Family của từng câu để tăng phản xạ nhé!";
+            } else if (percentageResult >= 50 && percentageResult <= 80) {
+                finalTeacherComment = "Kết quả rất tốt! Con đã phân biệt tốt tính từ đuôi -ing/-ed và các dạng danh từ chỉ người/vật.";
+            } else {
+                finalTeacherComment = "Bản lĩnh cấu trúc từ loại xuất sắc! Con đã hoàn thành xuất sắc chặng thử thách Word Form nâng cao.";
+            }
+
+            document.getElementById('score-text').innerText = `${correctCount} / ${uniqueCount}`;
+            document.getElementById('feedback-text').innerText = finalTeacherComment;
+            document.getElementById('score-modal').classList.add('active');
+
+            if (percentageResult >= 75) {
+                for (let k = 0; k < 5; k++) {
+                    setTimeout(launchConfettiEffect, k * 250);
+                }
+            }
+        }
+
+        function reloadQuizLayout() {
+            studentAnswersTrack = {};
+            confettiCollection = [];
+            document.getElementById('score-modal').classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(buildQuizLayout, 400);
+        }
+
+        window.onload = function() {
+            buildQuizLayout();
+        };
+    </script>
+</body>
+</html>
